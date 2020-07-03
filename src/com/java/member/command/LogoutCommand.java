@@ -11,12 +11,14 @@ public class LogoutCommand implements Command {
 	@Override
 	public String proRequest(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		HttpSession session = request.getSession();
-		if(!session.isNew()) {
-			String id = (String) session.getAttribute("id");
-			String memberLevel = (String) session.getAttribute("memberLevel");
-			logger.info(logMsg + id + " " + memberLevel);
-		}
+//		if(!session.isNew()) {
+//			String id = (String) session.getAttribute("id");
+//			String memberLevel = (String) session.getAttribute("memberLevel");
+//			logger.info(logMsg + id + " " + memberLevel);
+//			
+//			session.invalidate();
+//		}
 		
-		return null;
+		return "/WEB-INF/views/member/logout.jsp";
 	}
 }
