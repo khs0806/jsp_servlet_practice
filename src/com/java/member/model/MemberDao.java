@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.java.database.ConnectionProvider;
 import com.java.database.JdbcUtil;
@@ -78,5 +80,42 @@ public class MemberDao { //Data Access Object
 		}
 		
 		return value;
+	}
+
+	public List<ZipcodeDto> zipcodeReader(String checkDong) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		List<ZipcodeDto> arrayList = null;
+		
+		try {
+			String sql = "select * from zipcode where dong = ?";
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, checkDong);
+			rs = pstmt.executeQuery();
+			
+			arrayList = new ArrayList<ZipcodeDto>();
+			while(rs.next()) {
+				ZipcodeDto address = new ZipcodeDto();
+				address.setZipcode(rs.getString("zipcode"));	// getString()의 파라미터는 sql 절에서 as로 닉네임 붙여준 값을 넣어줄수 있다.
+				address.setSido(rs.getString("sido"));			// as 로 닉네임을 안붙여주면 열의 이름으로 대신한다.
+				address.setGugun(rs.getString("gugun"));
+				address.setDong(rs.getString("dong"));
+				address.setRi(rs.getString("ri"));
+				address.setBunji(rs.getString("bunji"));
+				
+				arrayList.add(address);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+		}
+		return arrayList;
 	}
 }

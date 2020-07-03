@@ -24,7 +24,7 @@
 		</div>
 		<script type="text/javascript">
 			opener.createChkForm.id.value = ${ id };
-			opener.createChkForm.idChkCount.value = ${ count };
+			//opener.createChkForm.idChkCount.value = ${ count };
 		</script>
 	</c:if>
 	<div align="center">
