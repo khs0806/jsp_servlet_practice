@@ -9,6 +9,8 @@ import com.java.member.model.MemberDao;
 public class LoginOkCommand implements Command{
 	@Override
 	public String proRequest(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		request.setCharacterEncoding("utf-8");
+		
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 		logger.info(logMsg + id + " " + password);

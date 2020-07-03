@@ -19,6 +19,11 @@
 		<a href="">회원수정</a>
 		<a href="">회원탈퇴</a>
 		<a href="${ root }/member/logout.do">로그아웃</a>
+		${memberLevel}
+		<c:if test="${memberLevel == 'MA'}">
+			<h3>관리자페이지</h3>
+			<a href="">회원관리</a>
+		</c:if>
 	</c:if>
 	
 	
