@@ -10,6 +10,7 @@ import java.util.List;
 import com.java.database.ConnectionProvider;
 import com.java.database.JdbcUtil;
 
+
 public class MemberDao { //Data Access Object
 	// singleton pattern : 단 한개의 객체를 가지고 설계한다.
 	private static MemberDao instance = new MemberDao();
@@ -117,5 +118,33 @@ public class MemberDao { //Data Access Object
 			JdbcUtil.close(conn);
 		}
 		return arrayList;
+	}
+
+	public String loginCheck(String id, String password) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String value = null;
+		
+		try {
+			String sql = "select member_level from member where id = ? and password=?";
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, password);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) value = rs.getString("member_level");
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+		}
+		
+		return value;
 	}
 }

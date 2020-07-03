@@ -11,7 +11,7 @@
 <script type="text/javascript" src="${root}/javascript/member/register.js"></script>
 </head>
 <body>
-	
+	<jsp:include page="../../../index.jsp"/>
 	<div id=memberform>
 	<span style="display:block;text-align:center;">회원가입( * 필수입력사항입니다.)</span>
 	<form action="${root}/member/registerOk.do" method="post" class="form"
