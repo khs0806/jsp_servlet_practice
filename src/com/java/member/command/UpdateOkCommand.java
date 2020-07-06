@@ -19,7 +19,7 @@ public class UpdateOkCommand implements Command {
 		memberDto.setNum(Integer.parseInt(request.getParameter("num")));
 		memberDto.setId((String) session.getAttribute("id"));
 		memberDto.setPassword(request.getParameter("password"));
-		memberDto.setEmail(request.getParameter("emial"));
+		memberDto.setEmail(request.getParameter("email"));
 		memberDto.setZipcode(request.getParameter("zipcode"));
 		
 		memberDto.setAddress(request.getParameter("address"));
@@ -29,9 +29,11 @@ public class UpdateOkCommand implements Command {
 		logger.info(logMsg + memberDto); // VO객체에서 toString을 명시안해도 내부적으로 불러온다.
 		
 		MemberDao dao = MemberDao.getInstance();
-		dao.update(memberDto);
+		int value = dao.update(memberDto);
+		logger.info(logMsg + value);
 		
-		return "/WEB-INF/views/member/main.jsp";
+		request.setAttribute("check", value);
+		return "/WEB-INF/views/member/updateOk.jsp";
 	}
 
 }

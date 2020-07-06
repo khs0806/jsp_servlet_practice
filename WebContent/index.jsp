@@ -17,7 +17,7 @@
 	</c:if>
 	<c:if test="${memberLevel != null}">
 		<a href="${ root }/member/update.do">회원수정</a>
-		<a href="">회원탈퇴</a>
+		<a href="${ root }/member/delete.do">회원탈퇴</a>
 		<a href="${ root }/member/logout.do">로그아웃</a>
 		${memberLevel}
 		<c:if test="${memberLevel == 'MA'}">
