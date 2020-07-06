@@ -16,7 +16,7 @@
 		<a href="${ root }/member/login.do">로그인</a>
 	</c:if>
 	<c:if test="${memberLevel != null}">
-		<a href="">회원수정</a>
+		<a href="${ root }/member/update.do">회원수정</a>
 		<a href="">회원탈퇴</a>
 		<a href="${ root }/member/logout.do">로그아웃</a>
 		${memberLevel}

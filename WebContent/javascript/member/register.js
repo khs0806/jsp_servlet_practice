@@ -13,7 +13,7 @@ function createForm(obj){
 		obj.password.focus();
 		return false;
 	}
-	if(obj.password.value.length <= 7){
+	if(obj.password.value.length < 7){
 		alert("비밀번호를 7자 이상 입력하세요");
 		obj.password.focus();
 		return false;

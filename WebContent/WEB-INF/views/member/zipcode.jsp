@@ -15,12 +15,12 @@
 		<div align="center">
 			<table>
 				<tr>
-					<td>우편번호를 검색하세요.</td>
+					<td>우편번호를 검색하세요. 예) 효성2동, 역삼1동</td>
 				</tr>
 				<tr>
 					<td>
 						<input type="text" name="dong"/>
-						<input type="submit" name="검색"/>
+						<input type="submit" value="검색"/>
 					</td>
 				</tr>
 			</table>

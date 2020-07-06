@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.java.database.ConnectionProvider;
 import com.java.database.JdbcUtil;
+import com.sun.media.jfxmedia.logging.Logger;
 
 
 public class MemberDao { //Data Access Object
@@ -141,6 +144,72 @@ public class MemberDao { //Data Access Object
 			e.printStackTrace();
 		} finally {
 			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+		}
+		
+		return value;
+	}
+
+	public MemberDto updateId(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MemberDto memberDto = null;
+		
+		try {
+			String sql = "select * from member where id = ?";
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				memberDto = new MemberDto();
+				
+				memberDto.setNum(rs.getInt("num"));
+				memberDto.setId(rs.getString("id"));
+				memberDto.setPassword(rs.getString("password"));
+				memberDto.setName(rs.getString("name"));
+				memberDto.setJumin1(rs.getString("jumin1"));
+				
+				memberDto.setJumin2(rs.getString("jumin2"));
+				memberDto.setEmail(rs.getString("email"));
+				memberDto.setZipcode(rs.getString("zipcode"));
+				memberDto.setAddress(rs.getString("address"));
+				memberDto.setJob(rs.getString("job"));
+				
+				memberDto.setInterest(rs.getString("interest"));
+				memberDto.setMailing(rs.getString("mailing"));
+				memberDto.setMemberLevel(rs.getString("member_level"));
+				System.out.println("testtesttesttest");
+//				Timestamp ts = rs.getTimestamp("register_date"); // SQL에서 날짜타입을 가져올 때 TimeStamp 타입으로 받고
+//				long time = ts.getTime();						 // 다시 long 타입으로 시간을 받아 온뒤
+//				Date date = new Date(time);						 // Date 타입으로 변환하여 dto에 set 해준다
+				memberDto.setRegisterDate(new Date(rs.getTimestamp("register_date").getTime()));
+				
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+		}
+		
+		return memberDto;
+	}
+	
+	public int update(MemberDto memberDto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int value = 0;
+		
+		try {
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
 			JdbcUtil.close(pstmt);
 			JdbcUtil.close(conn);
 		}
