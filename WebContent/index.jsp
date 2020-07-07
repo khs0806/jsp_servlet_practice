@@ -25,7 +25,8 @@
 			<a href="">회원관리</a>
 		</c:if>
 	</c:if>
-	
-	
+	<br/><br/>
+	<a href="${root}/board/write.do">게시판 글쓰기</a>
+	<a href="${root}/board/list.do">게시판 글목록</a>
 </body>
 </html>
