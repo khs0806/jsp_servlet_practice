@@ -18,24 +18,30 @@ public class ListCommand implements Command {
 		String pageNumber = request.getParameter("pageNumber");
 		if (pageNumber == null) pageNumber="1";
 		
-		int currentPage = Integer.parseInt(pageNumber);		// 1페이지를 요청
-		
+		int currentPage = Integer.parseInt(pageNumber);		// 1페이지를 요청, 현재 페이지
+		logger.info(logMsg + "현재페이지 : " + currentPage);
 		int boardSize = 10;									// 페이지당 게시글 개수 10개
-		int startRow = boardSize * (currentPage-1) + 1;		// 시작번호, 1페이지에선 시작번호가 1, 2페이지에선 시작번호가 11
-		int endRow = boardSize * currentPage;				// 끝번호,   1페이지에서 끝번호가 10, 2페이지에선 끝번호가 20
+		int startRow = boardSize * (currentPage-1) + 1;		// 화면에 뿌려질 게시글 시작행
+		int endRow = boardSize * currentPage;				// 화면에 뿌려질 게시글 마지막행
 		
 		BoardDao dao = BoardDao.getInstance();
 		int count = dao.getCount();							// 전체 게시물 개수를 가져오는 dao
+		
 		logger.info(logMsg + "전체 게시물 수 : " + count);
 		
+		ArrayList<BoardDto> boardList = null;
 		if (count > 0) {
 			// BoardDto, endRow
-			ArrayList<BoardDto> boardList = dao.getBoardList(startRow, endRow);	// startRow 시작페이지와, endRow 마지막 페이지를 
-																				// 파라미터로 넘겨줘서 한페이지의 리스트를 불러옴.
+			boardList = dao.getBoardList(startRow, endRow);	// startRow 시작행과, endRow 마지막행을 
+															// 파라미터로 넘겨줘서 한페이지의 리스트를 불러옴.
 			logger.info(logMsg + boardList.size());
 		}
+		request.setAttribute("boardList", boardList);
+		request.setAttribute("boardSize", boardSize);
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("count", count);
 		
-		return null;
+		return "/WEB-INF/views/board/list.jsp";
 	}
 
 }

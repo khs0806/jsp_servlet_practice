@@ -23,8 +23,13 @@
 	padding-bottom:2px;
 	text-align:center;
 }
-#power input, #power textarea {
+#power textarea, #power p {
 	margin:5px;
+	margin-bottom: 0;
+}
+
+#power input {
+	margin: 5px;
 }
 
 #power .title {

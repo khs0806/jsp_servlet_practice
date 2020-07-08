@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.java.database.ConnectionProvider;
 import com.java.database.JdbcUtil;
@@ -80,14 +81,18 @@ public class BoardDao {
 				}
 			} else {					// 답글 디비 처리, sequenceNumber(글순서)와 sequenceLevel(글레벨) 증가
 				sql = "update board set sequence_number = sequence_number + 1"
-						+ "where group_number = ? and sequence_number > 0";
+						+ " where group_number = ? and sequence_number > ?";
 				conn = ConnectionProvider.getConnection();
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, groupNumber);
 				pstmt.setInt(2, sequenceNumber);
+				pstmt.executeUpdate();
 				
 				sequenceNumber++;
 				sequenceLevel++;
+				
+				boardDto.setSequenceNumber(sequenceNumber);
+				boardDto.setSequenceLevel(sequenceLevel);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -143,6 +148,19 @@ public class BoardDao {
 			
 			while(rs.next()) {
 				BoardDto boardDto = new BoardDto();
+				boardDto.setBoardNumber(rs.getInt("board_number"));
+				boardDto.setWriter(rs.getString("writer"));
+				boardDto.setSubject(rs.getString("subject"));
+				boardDto.setEmail(rs.getString("email"));
+				boardDto.setContent(rs.getString("content"));
+				
+				boardDto.setPassword(rs.getString("password"));
+				boardDto.setWriteDate(new Date(rs.getTimestamp("write_date").getTime()));
+				boardDto.setReadCount(rs.getInt("read_count"));
+				boardDto.setGroupNumber(rs.getInt("group_number"));			// 답글 작성시 필요한 3가지 변수
+				boardDto.setSequenceNumber(rs.getInt("sequence_number"));	// group number, sequence number
+				boardDto.setSequenceLevel(rs.getInt("sequence_level"));		// sequence level 이 3가지로 본문인지 답글인지 판단.
+				System.out.println(boardDto);
 				boardList.add(boardDto);
 			}
 			
@@ -156,6 +174,58 @@ public class BoardDao {
 		
 		
 		return boardList;
+	}
+
+	public BoardDto read(int boardNumber) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardDto boardDto = null;
+		
+		try {
+			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
+			String sqlUpdate = "update board set read_count = read_count + 1"
+							  +" where board_number = ?";
+			pstmt = conn.prepareStatement(sqlUpdate);
+			pstmt.setInt(1, boardNumber);
+			int value = pstmt.executeUpdate();
+			
+			if (value > 0) JdbcUtil.close(pstmt);
+			
+			String sqlSelect = "select * from board where board_number = ?";
+			pstmt = conn.prepareStatement(sqlSelect);
+			pstmt.setInt(1, boardNumber);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				boardDto = new BoardDto();
+				boardDto.setBoardNumber(rs.getInt("board_number"));
+				boardDto.setWriter(rs.getString("writer"));
+				boardDto.setSubject(rs.getString("subject"));
+				boardDto.setEmail(rs.getString("email"));
+				boardDto.setContent(rs.getString("content"));
+				
+				boardDto.setPassword(rs.getString("password"));
+				boardDto.setWriteDate(new Date(rs.getTimestamp("write_date").getTime()));
+				boardDto.setReadCount(rs.getInt("read_count"));
+				boardDto.setGroupNumber(rs.getInt("group_number"));
+				boardDto.setSequenceNumber(rs.getInt("sequence_number"));
+				boardDto.setSequenceLevel(rs.getInt("sequence_level"));
+				
+			}
+			conn.commit();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			JdbcUtil.rollBack(conn);
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+		}
+		
+		return boardDto;
 	}
 	
 	

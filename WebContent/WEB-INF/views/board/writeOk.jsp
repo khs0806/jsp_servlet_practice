@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:if test="${check>0}">
+	<c:if test="${check > 0}">
 		<script type="text/javascript">
 			alert("글쓰기를 성공하셨습니다.");
 			location.href="${root}/board/list.do";

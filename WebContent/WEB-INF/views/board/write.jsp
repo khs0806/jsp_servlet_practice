@@ -13,11 +13,11 @@
 <body>
 	<div id="power">
 		<div class="title">
-			<span><a href="#">글목록</a></span>
+			<span><a href="${root}/board/list.do">글목록</a></span>
 		</div>
 		<form action="${root}/board/writeOk.do" method="post" 
 			onsubmit="return boardCheck(this)">
-			
+			${boardNumber}, ${groupNumber}, ${sequenceNumber}, ${sequenceLevel}
 			<input type="hidden" name="boardNumber" value="${boardNumber}"/>
 			<input type="hidden" name="groupNumber" value="${groupNumber}"/>
 			<input type="hidden" name="sequenceNumber" value="${sequenceNumber}"/>
@@ -35,7 +35,7 @@
 				<input type="text" name="email">
 			</div>
 			<div>
-				<label class="six" style="height: 164px;">내용</label>
+				<label class="six" style="height: 155px;">내용</label>
 				<textarea name="content" rows="10" cols="50"></textarea>
 			</div>
 			<div>

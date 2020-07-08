@@ -1,31 +1,51 @@
-create table member(
-    num number(10),
-    id varchar2(50) not null,
-    password varchar2(100) not null,
-    name varchar2(50) not null,
-    jumin1 varchar2(20) not null,
-    
-    jumin2 varchar2(20) not null,
+       
+create table board(
+    board_number number(8) not null,
+    writer varchar2(10) not null,
+    subject varchar2(100) not null,
     email varchar2(50) not null,
-    zipcode varchar2(50) not null,
-    address varchar2(100) not null,
-    job varchar2(200) not null,
+    content varchar2(4000) not null,
+    password varchar2(20) not null,
     
-    mailing varchar2(5) not null,
-    interest varchar2(50) not null,
-    member_level varchar2(6) not null,
-    register_date date not null,
-    
-    primary key(num)
+    write_date date not null,
+    read_count number(5) default 0,
+    group_number number(5) not null,
+    sequence_number number(5) not null,
+    sequence_level number(5) not null,
+    primary key(board_number)
 );
 
-create sequence member_num_seq;
+create sequence board_board_number_seq;
 
-create table zipcode(
-    zipcode varchar2(50),
-    sido varchar2(70),
-    gugun varchar2(80),
-    dong varchar2(100),
-    ri varchar2(100),
-    bunji varchar2(100)
-);
+select max(group_number) from board;
+
+select * from board;
+
+select board_number, writer, subject from board;
+select rownum, board_number, writer, subject from board;
+
+/* 오라클에서는 rownum을 쓸 때 아래와 같이 조건절을 이용할 수 없다 
+이유는 from절이 제일 처음 실행되고 그 다음에 where절이 수행되는데 이때 rownum은
+실데이터에선 없는 상황이기 때문에 에러가 난다. 그렇기 때문에 서브쿼리를 이용하여 가져온다.*/
+select rownum, board_number, writer, subject from board where rownum = 3;
+
+/*서브쿼리를 이용하여 가능하게 할 수 있다.*/
+select a.* from
+    (select rownum rnum, board_number, writer, subject from board) a
+     where a.rnum = 2;
+
+/*또한 오라클은 까다롭게도 아래처럼 rownum과 *(애스터리스크)를 같이
+사용할 수가 없다. 문법구조상 ㅡㅡ;*/
+select rownum,* from board order by board_number desc;
+
+/* 서브쿼리를 이용하여 a.*과 같이 사용하면 가능하다. */
+select rownum as rnum, a.* from
+(select * from board order by board_number desc) a;
+
+select * from
+(select rownum as rnum, a.* from
+(select * from board order by group_number desc, sequence_number asc) a) b
+where b.rnum >= 1 and b.rnum <= 10;
+
+insert into board values(board_board_number_seq.nextval,1,1,1,1,1,sysdate,1,1,1,1);
+

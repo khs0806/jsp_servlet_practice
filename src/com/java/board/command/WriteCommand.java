@@ -19,7 +19,10 @@ public class WriteCommand implements Command {
 		
 		// 답글은 부모글의 글번호, 그룹번호, 글순서, 글레벨을 가져와야댐.
 		if(request.getParameter("boardNumber") != null) {
-			
+			boardNumber = Integer.parseInt(request.getParameter("boardNumber"));
+			groupNumber = Integer.parseInt(request.getParameter("groupNumber"));
+			sequenceNumber = Integer.parseInt(request.getParameter("sequenceNumber"));
+			sequenceLevel = Integer.parseInt(request.getParameter("sequenceLevel"));
 		}
 		logger.info(logMsg + "boardNumber : " + boardNumber);
 		logger.info(logMsg + "groupNumber : " + groupNumber);
