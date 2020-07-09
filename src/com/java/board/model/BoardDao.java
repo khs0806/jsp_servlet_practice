@@ -88,11 +88,8 @@ public class BoardDao {
 				pstmt.setInt(2, sequenceNumber);
 				pstmt.executeUpdate();
 				
-				sequenceNumber++;
-				sequenceLevel++;
-				
-				boardDto.setSequenceNumber(sequenceNumber);
-				boardDto.setSequenceLevel(sequenceLevel);
+				boardDto.setSequenceNumber(++sequenceNumber);
+				boardDto.setSequenceLevel(++sequenceLevel);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -226,6 +223,31 @@ public class BoardDao {
 		}
 		
 		return boardDto;
+	}
+
+	public int delete(int boardNumber, String password) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		int check = 0;
+		
+		try {
+			String sql = "delete from board where board_number = ? and password = ?";
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, boardNumber);
+			pstmt.setString(2, password);
+			check = pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+		}
+		
+		return check;
 	}
 	
 	

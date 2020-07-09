@@ -22,7 +22,7 @@ import com.java.command.Command;
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public Logger logger = Logger.getLogger(FrontController.class.getName());
-	public String logMsg = "logMsg=========";
+	public String logMsg = "logMsg========= ";
 	
 	private HashMap<String,Object> commandMap = new  HashMap<>();
 	

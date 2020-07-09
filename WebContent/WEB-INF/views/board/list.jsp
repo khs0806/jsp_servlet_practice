@@ -24,7 +24,7 @@
 		게시판에 저장된 글이 없습니다.
 	</div>
 </c:if>
-<c:if test="${count >0}">
+<c:if test="${count > 0}">
 	<div align="center">
 		<!-- 게시글 -->
 		<table border="1">
@@ -39,7 +39,17 @@
 			<c:forEach var="board" items="${boardList}">
 				<tr>
 					<td width="50">${board.boardNumber}</td>
-					<td width="350"><a href="${root}/board/read.do?boardNumber=${board.boardNumber}&pageNumber=${currentPage}">${board.subject}</a></td>
+					<td width="350">
+						<c:if test="${board.sequenceLevel > 0}">
+							<c:forEach begin="1" end="${board.sequenceLevel}">
+							&nbsp;
+							</c:forEach>
+							Re:
+						</c:if>
+						<a href="${root}/board/read.do?boardNumber=${board.boardNumber}&pageNumber=${currentPage}">
+							${board.subject}
+						</a>
+					</td>
 					<td width="90">${board.writer}</td>
 					<td width="200">
 						<fmt:formatDate value="${board.writeDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

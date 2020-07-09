@@ -12,9 +12,6 @@
 </head>
 <body>
 	<div id="power">
-		<div class="title">
-			<span><a href="${root}/board/list.do">글목록</a></span>
-		</div>
 		<form action="${root}/board/writeOk.do" method="post" 
 			onsubmit="return boardCheck(this)">
 			${boardNumber}, ${groupNumber}, ${sequenceNumber}, ${sequenceLevel}
@@ -45,7 +42,7 @@
 			<div class="bottom">
 				<input type="submit" value="글쓰기">
 				<input type="reset" value="다시작성">
-				<input type="button" value="목록보기">
+				<input type="button" value="목록보기" onclick="location.href='${root}/board/list.do'">
 			</div>
 		</form>
 	</div>

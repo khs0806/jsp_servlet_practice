@@ -16,8 +16,22 @@ function replyFun(root, boardNumber, groupNumber,sequenceNumber, sequenceLevel){
 		url += "&groupNumber=" + groupNumber;
 		url += "&sequenceNumber=" + sequenceNumber;
 		url += "&sequenceLevel=" + sequenceLevel;
-	alert(url);
 	location.href = url;
+}
+function delFun(root, boardNumber, pageNumber){
+	var url = root + "/board/delete.do?boardNumber=" + boardNumber + "&pageNumber=" + pageNumber;
+	//alert(url);
+	location.href = url;
+	
+	// 밑에 로직은 자바스크립트단에서 바로 OkCommand로 보내줘서 바로 삭제되게 한다.
+	// 이 경우에는 password를 따로 넘겨줄 수 없기 때문에 중요하지 않은거 삭제할 때 쓰면된다.(물론 넘기는방법도 있긴있음)
+// 	var value = confirm("삭제 하시겠습니까?"); 
+// 	if (value) {
+// 		var url = root + "/board/deleteOk.do?boardNumber=" + boardNumber + "&pageNumber=" + pageNumber;
+// 		location.href = url;
+// 	} else {
+// 		alert('삭제취소오키');
+// 	}
 }
 
 </script>
@@ -51,9 +65,9 @@ function replyFun(root, boardNumber, groupNumber,sequenceNumber, sequenceLevel){
 		</div>
 		<div class="bottom">
 			<input type="button" value="글수정" onclick=""/>
-			<input type="button" value="글삭제" onclick=""/>
+			<input type="button" value="글삭제" onclick="delFun('${root}','${boardDto.boardNumber}','${pageNumber}')"/>
 			<input type="button" value="답글" onclick="replyFun('${root}','${boardDto.boardNumber}','${boardDto.groupNumber}','${boardDto.sequenceNumber}','${boardDto.sequenceLevel}')"/>
-			<input type="button" value="글목록" onclick=""/>
+			<input type="button" value="글목록" onclick="location.href='${root}/board/list.do'"/>
 		</div>
 	</div>
 </body>

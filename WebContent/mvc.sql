@@ -49,3 +49,9 @@ where b.rnum >= 1 and b.rnum <= 10;
 
 insert into board values(board_board_number_seq.nextval,1,1,1,1,1,sysdate,1,1,1,1);
 
+select * from board;
+delete from board;
+
+select board_board_number_seq.nextval from dual;
+
+alter sequence board_board_number_seq increment by 1 minvalue 0;
