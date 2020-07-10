@@ -28,10 +28,6 @@
 				<input type="text" name="subject">
 			</div>
 			<div>
-				<label class="six">이메일</label>
-				<input type="text" name="email">
-			</div>
-			<div>
 				<label class="six" style="height: 155px;">내용</label>
 				<textarea name="content" rows="10" cols="50"></textarea>
 			</div>

@@ -6,7 +6,6 @@ public class BoardDto {
 	private int boardNumber;
 	private String writer;
 	private String subject;
-	private String email;
 	private String content;
 	private String password;
 	
@@ -17,13 +16,12 @@ public class BoardDto {
 	private int sequenceLevel;
 	
 	public BoardDto() {}
-	public BoardDto(int boardNumber, String writer, String subject, String email, String content, String password,
+	public BoardDto(int boardNumber, String writer, String subject, String content, String password,
 			Date writeDate, int readCount, int groupNumber, int sequenceNumber, int sequenceLevel) {
 		super();
 		this.boardNumber = boardNumber;
 		this.writer = writer;
 		this.subject = subject;
-		this.email = email;
 		this.content = content;
 		this.password = password;
 		this.writeDate = writeDate;
@@ -55,14 +53,6 @@ public class BoardDto {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getContent() {
@@ -123,8 +113,8 @@ public class BoardDto {
 
 	@Override
 	public String toString() {
-		return "BoardDto [boardNumber=" + boardNumber + ", writer=" + writer + ", subject=" + subject + ", email="
-				+ email + ", content=" + content + ", password=" + password + ", writeDate=" + writeDate
+		return "BoardDto [boardNumber=" + boardNumber + ", writer=" + writer + ", subject=" + subject 
+				+ ", content=" + content + ", password=" + password + ", writeDate=" + writeDate
 				+ ", readCount=" + readCount + ", groupNumber=" + groupNumber + ", sequenceNumber=" + sequenceNumber
 				+ ", sequenceLevel=" + sequenceLevel + "]";
 	}

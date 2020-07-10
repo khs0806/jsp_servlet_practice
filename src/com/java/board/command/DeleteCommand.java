@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.java.command.Command;
+import com.java.member.model.MemberDao;
+import com.java.member.model.MemberDto;
 
 public class DeleteCommand implements Command {
 

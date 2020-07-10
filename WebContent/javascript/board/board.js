@@ -2,5 +2,5 @@
  * 
  */
 function boardCheck(obj){
-	alert("OK");
+	alert("유효성체크 ok");
 }

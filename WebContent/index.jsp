@@ -28,5 +28,8 @@
 	<br/><br/>
 	<a href="${root}/board/write.do">게시판 글쓰기</a>
 	<a href="${root}/board/list.do">게시판 글목록</a>
+	<br/><br/>
+	<a href="${root}/fileBoard/write.do">파일 게시판 글쓰기</a>
+	<a href="${root}/fileBoard/list.do">파일 게시판 글목록</a>
 </body>
 </html>

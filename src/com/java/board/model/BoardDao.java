@@ -25,24 +25,26 @@ public class BoardDao {
 		writeNumber(boardDto, conn);
 		
 		try {
-			String sql = "insert into board values(board_board_number_seq.nextval,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into(board_number, writer, subject, content, password, "
+					+ "write_date, read_count, group_number, sequence_number, sequence_level, "
+					+ "file_name, path, file_size) "
+					+ "board values(board_board_number_seq.nextval,?,?,?,?,?,?,?,?,?)";
 			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
 				
 			pstmt.setString(1, boardDto.getWriter());
 			pstmt.setString(2, boardDto.getSubject());
-			pstmt.setString(3, boardDto.getEmail());
-			pstmt.setString(4, boardDto.getContent());
-			pstmt.setString(5, boardDto.getPassword());
+			pstmt.setString(3, boardDto.getContent());
+			pstmt.setString(4, boardDto.getPassword());
 				
 //			Date date = boardDto.getWriteDate(); 
 //			long time = date.getTime(); 
 //			Timestamp ts = new Timestamp(time);
-			pstmt.setTimestamp(6, new Timestamp(boardDto.getWriteDate().getTime()));
-			pstmt.setInt(7, boardDto.getReadCount());
-			pstmt.setInt(8, boardDto.getGroupNumber());
-			pstmt.setInt(9, boardDto.getSequenceNumber());
-			pstmt.setInt(10, boardDto.getSequenceLevel());
+			pstmt.setTimestamp(5, new Timestamp(boardDto.getWriteDate().getTime()));
+			pstmt.setInt(6, boardDto.getReadCount());
+			pstmt.setInt(7, boardDto.getGroupNumber());
+			pstmt.setInt(8, boardDto.getSequenceNumber());
+			pstmt.setInt(9, boardDto.getSequenceLevel());
 			
 			value = pstmt.executeUpdate();
 			
@@ -148,7 +150,6 @@ public class BoardDao {
 				boardDto.setBoardNumber(rs.getInt("board_number"));
 				boardDto.setWriter(rs.getString("writer"));
 				boardDto.setSubject(rs.getString("subject"));
-				boardDto.setEmail(rs.getString("email"));
 				boardDto.setContent(rs.getString("content"));
 				
 				boardDto.setPassword(rs.getString("password"));
@@ -200,7 +201,6 @@ public class BoardDao {
 				boardDto.setBoardNumber(rs.getInt("board_number"));
 				boardDto.setWriter(rs.getString("writer"));
 				boardDto.setSubject(rs.getString("subject"));
-				boardDto.setEmail(rs.getString("email"));
 				boardDto.setContent(rs.getString("content"));
 				
 				boardDto.setPassword(rs.getString("password"));
@@ -249,6 +249,72 @@ public class BoardDao {
 		
 		return check;
 	}
-	
-	
+
+	public BoardDto updateView(int boardNumber) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		BoardDto boardDto = null;
+		
+		try {
+			conn = ConnectionProvider.getConnection();
+			
+			String sqlSelect = "select * from board where board_number = ?";
+			pstmt = conn.prepareStatement(sqlSelect);
+			pstmt.setInt(1, boardNumber);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				boardDto = new BoardDto();
+				boardDto.setBoardNumber(rs.getInt("board_number"));
+				boardDto.setWriter(rs.getString("writer"));
+				boardDto.setSubject(rs.getString("subject"));
+				boardDto.setContent(rs.getString("content"));
+				
+				boardDto.setPassword(rs.getString("password"));
+				boardDto.setWriteDate(new Date(rs.getTimestamp("write_date").getTime()));
+				boardDto.setReadCount(rs.getInt("read_count"));
+				boardDto.setGroupNumber(rs.getInt("group_number"));
+				boardDto.setSequenceNumber(rs.getInt("sequence_number"));
+				boardDto.setSequenceLevel(rs.getInt("sequence_level"));
+				
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+		}
+		
+		return boardDto;
+	}
+
+	public int update(BoardDto boardDto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int value = 0;
+		
+		try {
+			String sql = "update board set subject = ?, content = ?, password = ? where board_number = ?";
+			conn = ConnectionProvider.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+		    pstmt.setString(1, boardDto.getSubject());
+			pstmt.setString(2, boardDto.getContent());
+			pstmt.setString(3, boardDto.getPassword());
+			pstmt.setInt(4, boardDto.getBoardNumber());
+			
+			value = pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(pstmt);
+			JdbcUtil.close(conn);
+		}
+		
+		return value;
+	}
 }

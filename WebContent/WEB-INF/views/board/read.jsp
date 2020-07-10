@@ -33,7 +33,11 @@ function delFun(root, boardNumber, pageNumber){
 // 		alert('삭제취소오키');
 // 	}
 }
-
+function updateFun(root, boardNumber, pageNumber){
+	var url = root + "/board/update.do?boardNumber=" + boardNumber + "&pageNumber=" + pageNumber;
+	//alert(url);
+	location.href = url;
+}
 </script>
 </head>
 <body>
@@ -64,7 +68,7 @@ function delFun(root, boardNumber, pageNumber){
 			<p><fmt:formatDate value="${boardDto.writeDate}" pattern="yyyy-MM-dd hh:mm"/></p>
 		</div>
 		<div class="bottom">
-			<input type="button" value="글수정" onclick=""/>
+			<input type="button" value="글수정" onclick="updateFun('${root}','${boardDto.boardNumber}','${pageNumber}')"/>
 			<input type="button" value="글삭제" onclick="delFun('${root}','${boardDto.boardNumber}','${pageNumber}')"/>
 			<input type="button" value="답글" onclick="replyFun('${root}','${boardDto.boardNumber}','${boardDto.groupNumber}','${boardDto.sequenceNumber}','${boardDto.sequenceLevel}')"/>
 			<input type="button" value="글목록" onclick="location.href='${root}/board/list.do'"/>

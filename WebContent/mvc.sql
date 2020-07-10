@@ -52,6 +52,13 @@ insert into board values(board_board_number_seq.nextval,1,1,1,1,1,sysdate,1,1,1,
 select * from board;
 delete from board;
 
+/* 시퀀스 초기화 */
 select board_board_number_seq.nextval from dual;
-
 alter sequence board_board_number_seq increment by 1 minvalue 0;
+
+/* 파일업로드 테이블로 수정 */
+alter table board add file_name varchar2(200);
+alter table board add path varchar2(100);
+alter table board add file_size number(10);
+
+insert into board(board_number, writer, subject, content, password, write_date, read_count, group_number, sequence_number, sequence_level, file_name, path, file_size) 

@@ -24,7 +24,6 @@ public class WriteOkCommand implements Command {
 		
 		boardDto.setWriter(request.getParameter("writer"));
 		boardDto.setSubject(request.getParameter("subject"));
-		boardDto.setEmail(request.getParameter("email"));
 		boardDto.setContent(request.getParameter("content"));
 		boardDto.setPassword(request.getParameter("password"));
 		boardDto.setWriteDate(new Date());
