@@ -58,7 +58,7 @@ alter sequence board_board_number_seq increment by 1 minvalue 0;
 
 /* 파일업로드 테이블로 수정 */
 alter table board add file_name varchar2(200);
-alter table board add path varchar2(100);
+alter table board MODIFY path varchar2(300);
 alter table board add file_size number(10);
 
 insert into board(board_number, writer, subject, content, password, write_date, read_count, group_number, sequence_number, sequence_level, file_name, path, file_size) 
