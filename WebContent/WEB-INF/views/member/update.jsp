@@ -26,7 +26,7 @@
 			*<input type="password" name="password" value="${memberDto.password}"/>
 		</div>
 		<div class="label">
-			<label>비밀번호확인</label>
+			<label>비밀번호확인 ${ password }</label>
 			*<input type="password" name="passwordCheck"/>
 		</div>
 		<div class="label">
