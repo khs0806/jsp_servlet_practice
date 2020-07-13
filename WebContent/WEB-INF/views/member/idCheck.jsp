@@ -23,7 +23,7 @@
 			사용 가능한 아이디 입니다.
 		</div>
 		<script type="text/javascript">
-			opener.createChkForm.id.value = ${ id };
+			opener.createChkForm.id.value = '${ id }';
 			//opener.createChkForm.idChkCount.value = ${ count };
 		</script>
 	</c:if>

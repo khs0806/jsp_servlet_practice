@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.java.member.model.mapper.MemberMapper">
+	<resultMap type="com.java.member.model.MemberDto" id="member_dto">
+		<result column="num" property="num"/>
+		<result column="id" property="id"></result>
+		<result column="password" property="password"></result>
+		<result column="name" property="name"></result>
+		<result column="jumin1" property="jumin1"></result>
+		<result column="jumin2" property="jumin2"></result>
+		<result column="email" property="email"></result>
+		<result column="zipcode" property="zipcode"></result>
+		<result column="address" property="address"></result>
+		<result column="job" property="job"></result>
+		<result column="mailng" property="mailing"></result>
+		<result column="interest" property="interest"></result>
+		<result column="member_level" property="memberLevel"></result>
+		<result column="register_date" property="registerDate"></result>
+	</resultMap>
+	
+<!-- 	select는 resultType을 명시하지만 insert,update,delete는 내부적으로 제공해주기때문에 명시하지 않는다. -->
+	<insert id="member_insert" parameterType="com.java.member.model.MemberDto">
+		insert into member values (
+				member_num_seq.nextval, 
+				#{id},
+				#{password},
+				#{name},
+				#{jumin1},
+				#{jumin2},
+				#{email},
+				#{zipcode},
+				#{address},
+				#{job},
+				#{mailing},
+				#{interest},
+				#{memberLevel}, 
+				sysdate
+		)
+	</insert>
+	
+<!-- 	기본타입의 자료형을 parameterType을 입력할때 앞에 패키지명은 생략가능하다. -->
+	<select id="member_id_check" parameterType="String" resultType="String">
+		select id from member where id = #{id}
+	</select>
+	
+<!-- 	resultType에서 내가 만든 DTO 클래스는 풀패키지명을 작성해주어야 한다. -->
+	<select id="member_zipcode" parameterType="String" resultType="com.java.member.model.ZipcodeDto">
+		select * from zipcode where dong = #{dong}
+	</select>
+	
+<!-- 	parameterType이 HashMap으로 된 이유는 String으로 id, password를 같이 전달해줄수 없으니 
+	 	DAO 객체에서 HashMap으로 키밸류 값으로 전달해주어야 한다. -->
+	<select id="member_login" parameterType="HashMap" resultType="String">
+		select member_level from member where id = #{id} and password = #{password}
+	</select>
+	
+<!-- 	DB에서의 컬럼 값이랑 DTO 객체의 필드명이 다를땐 resultMap을 사용하여 매핑시켜준다. -->
+	<select id="member_select" parameterType="String" resultMap="member_dto">
+		select * from member where id = #{id}
+	</select>
+	
+	<update id="member_update" parameterType="com.java.member.model.MemberDto">
+		update member set 
+			password = #{password}, 
+			email = #{email}, 
+			zipcode = #{zipcode}, 
+			address = #{address}, 
+			job = #{job}, 
+			mailing = #{mailing}, 
+			interest = #{interest}
+		where num = #{num}
+	</update>
+	 
+	<delete id="member_delete" parameterType="Map">
+		delete from member where id = #{id} and password = #{password}
+	</delete>
+</mapper>

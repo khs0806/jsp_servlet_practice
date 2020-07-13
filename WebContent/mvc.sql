@@ -49,8 +49,10 @@ where b.rnum >= 1 and b.rnum <= 10;
 
 insert into board values(board_board_number_seq.nextval,1,1,1,1,1,sysdate,1,1,1,1);
 
+select * from member;
 select * from board;
 delete from board;
+select * from member where id = 'boydsa';
 
 /* ½ÃÄö½º ÃÊ±âÈ­ */
 select board_board_number_seq.nextval from dual;

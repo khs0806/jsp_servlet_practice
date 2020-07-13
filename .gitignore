@@ -15,7 +15,7 @@ local.properties
 .recommenders
 *.class
 pds/
-
+build/
 
 # External tool builders
 .externalToolBuilders/

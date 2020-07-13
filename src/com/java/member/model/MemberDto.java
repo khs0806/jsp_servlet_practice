@@ -16,7 +16,7 @@ public class MemberDto {
 	private String interest;
 	
 	// 사용자가 입력하지 않고 DB에서 로직상 필요한 데이터
-	private Date registerDate;  // Date, sysdate 오라클에서 처리
+	private Date registerDate;  // Date, sysdate 오라클에서 처리    
 	private int num;			// .nextval 오라클에서 처리
 	private String memberLevel;	// 회원등급 : 3개 (BA, AA, VIP) 자바에서 처리
 	
