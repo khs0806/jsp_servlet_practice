@@ -15,7 +15,9 @@ public class SqlManager {
 		try {
 			String resource = "com/java/myBatis/sqlConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
+			System.out.println("sqlSessionFactory start");
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

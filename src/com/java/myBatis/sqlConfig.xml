@@ -17,5 +17,6 @@
   <mappers>
     <mapper resource="com/java/member/model/mapper/memberMapper.xml"/>
     <mapper resource="com/java/board/model/mapper/boardMapper.xml"/>
+    <mapper resource="com/java/fileBoard/model/mapper/fileBoardMapper.xml"/>
   </mappers>
 </configuration>

@@ -3,26 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.java.board.model.mapper.BoardMapper">
-	<resultMap type="com.java.board.model.BoardDto" id="boardDto">
+<mapper namespace="com.java.fileBoard.model.mapper.FileBoardMapper">
+	<resultMap type="com.java.fileBoard.model.BoardDto" id="boardDto">
 		<result column="board_number" property="boardNumber"/>
-		<result column="writer" property="writer"/>
-		<result column="subject" property="subject"/>
-		<result column="email" property="email"/>
-		<result column="content" property="content"/>
-		<result column="password" property="password"/>
 		<result column="write_date" property="writeDate"/>
 		<result column="read_count" property="readCount"/>
 		<result column="group_number" property="groupNumber"/>
 		<result column="sequence_number" property="sequenceNumber"/>
 		<result column="sequence_level" property="sequenceLevel"/>
+		<result column="file_name" property="fileName"/>
+		<result column="file_size" property="fileSize"/>
 	</resultMap>
 
-	<select id="board_group_number_max" resultType="int">
+	<select id="fileBoard_group_number_max" resultType="int">
 		select nvl(max(group_number), 0) from board
 	</select>
 	
-	<update id="board_seqeunce_number" parameterType="com.java.board.model.BoardDto">
+	<update id="fileBoard_seqeunce_number" parameterType="com.java.board.model.BoardDto">
 		<![CDATA[
 			update board set 
 					sequence_number = sequence_number + 1
@@ -32,7 +29,7 @@
 		]]>
 	</update>
 	
-	<insert id="board_insert" parameterType="com.java.board.model.BoardDto">
+	<insert id="fileBoard_insert" parameterType="com.java.board.model.BoardDto">
 		insert into board (
 				board_number, 
 				writer, 
@@ -59,11 +56,44 @@
 		)
 	</insert>
 	
-	<select id="board_count" resultType="int">
+	<insert id="fileBoard_insert_add_file" parameterType="com.java.board.model.BoardDto">
+		insert into board (
+				board_number, 
+				writer, 
+				subject, 
+				content, 
+				password, 
+				write_date, 
+				read_count, 
+				group_number, 
+				sequence_number, 
+				sequence_level,
+				file_name, 
+				path, 
+				file_size		
+		) 
+		values(
+				board_board_number_seq.nextval,
+				#{writer},
+				#{subject},
+				#{content},
+				#{password},
+				#{writeDate},
+				#{readCount},
+				#{groupNumber},
+				#{sequenceNumber},
+				#{sequenceLevel},
+				#{fileName},
+				#{path},
+				#{fileSize}
+		)
+	</insert>
+	
+	<select id="fileBoard_count" resultType="int">
 		select count(*) from board
 	</select>
-	 
-	<select id="board_list" resultMap="boardDto">
+	
+	<select id="fileBoard_list" resultMap="boardDto">
 		<![CDATA[
 			select * from 
 					(select rownum as rnum, a.* from 
@@ -73,26 +103,38 @@
 		]]>
 	</select>
 	
-	 <update id="board_read_count" parameterType="int">
+	<update id="fileBoard_read_count" parameterType="int">
 		 <![CDATA[
 			 update board set read_count = read_count + 1
 			 where board_number = #{boardNumber}
 		 ]]>
 	 </update>
 	 
-	 <select id="board_read" parameterType="int" resultMap="boardDto">
+	 <select id="fileBoard_read" parameterType="int" resultMap="boardDto">
 	 	 select * from board where board_number = #{boardNumber}
 	 </select>
 	 
-	 <delete id="board_delete" parameterType="Map">
+	 <delete id="fileBoard_delete" parameterType="Map">
 	 	 delete from board where board_number = #{boardNumber} and password = #{password}
 	 </delete>
 	 
-	 <update id="board_update" parameterType="com.java.board.model.BoardDto">
+	 <update id="fileBoard_update" parameterType="com.java.fileBoard.model.BoardDto">
 	 	 update board set 
 	 	 		subject = #{subject}, 
 	 	 		content = #{content}, 
 	 	 		password = #{password} 
+	 	 where 
+	 	 		board_number = #{boardNumber}
+	 </update>
+	 
+	 <update id="fileBoard_update_add_file" parameterType="com.java.fileBoard.model.BoardDto">
+	 	 update board set 
+	 	 		subject = #{subject}, 
+	 	 		content = #{content}, 
+	 	 		password = #{password},
+	 	 		file_name = #{fileName, jdbcType=VARCHAR},
+	 	 		path = #{path, jdbcType=VARCHAR},
+	 	 		file_size = #{fileSize}  
 	 	 where 
 	 	 		board_number = #{boardNumber}
 	 </update>

@@ -1,6 +1,7 @@
 package com.java.fileBoard.command;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,13 +30,14 @@ public class ListCommand implements Command {
 		
 		logger.info(logMsg + "전체 게시물 수 : " + count);
 		
-		ArrayList<BoardDto> boardList = null;
+		List<BoardDto> boardList = null;
 		if (count > 0) {
 			// BoardDto, endRow
 			boardList = dao.getBoardList(startRow, endRow);	// startRow 시작행과, endRow 마지막행을 
 															// 파라미터로 넘겨줘서 한페이지의 리스트를 불러옴.
 			logger.info(logMsg + boardList.size());
 		}
+		logger.info(logMsg + boardList.get(0));
 		request.setAttribute("boardList", boardList);
 		request.setAttribute("boardSize", boardSize);
 		request.setAttribute("currentPage", currentPage);

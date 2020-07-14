@@ -1,6 +1,7 @@
 package com.java.board.command;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +30,7 @@ public class ListCommand implements Command {
 		
 		logger.info(logMsg + "전체 게시물 수 : " + count);
 		
-		ArrayList<BoardDto> boardList = null;
+		List<BoardDto> boardList = null;
 		if (count > 0) {
 			// BoardDto, endRow
 			boardList = dao.getBoardList(startRow, endRow);	// startRow 시작행과, endRow 마지막행을 

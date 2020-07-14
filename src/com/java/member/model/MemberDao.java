@@ -115,7 +115,6 @@ public class MemberDao { //Data Access Object
 		try {
 			session = sqlSessionFactory.openSession();
 			memberDto = session.selectOne("member_select", id);
-			System.out.println("test    "+memberDto);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -132,7 +131,7 @@ public class MemberDao { //Data Access Object
 		try {
 			session = sqlSessionFactory.openSession();
 			value = session.update("member_update", memberDto);
-			
+			session.commit();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
