@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.java.sawon.model.mapper.SawonMapper">
+	<select id="sawonList" resultType="com.java.sawon.model.SawonDto">
+		SELECT 
+				e.employee_id, 
+				e.first_name, 
+				e.hire_date, 
+				e.job_id, 
+				d.department_id, 
+				d.department_name
+		FROM employees e, departments d
+		WHERE e.department_id = d.department_id
+		AND d.department_name = #{departmentName} 
+	</select>
+</mapper>

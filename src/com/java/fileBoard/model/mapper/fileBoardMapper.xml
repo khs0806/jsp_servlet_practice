@@ -132,8 +132,8 @@
 	 	 		subject = #{subject}, 
 	 	 		content = #{content}, 
 	 	 		password = #{password},
-	 	 		file_name = #{fileName, jdbcType=VARCHAR},
-	 	 		path = #{path, jdbcType=VARCHAR},
+	 	 		file_name = #{fileName},
+	 	 		path = #{path},
 	 	 		file_size = #{fileSize}  
 	 	 where 
 	 	 		board_number = #{boardNumber}

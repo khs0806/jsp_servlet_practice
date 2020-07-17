@@ -16,8 +16,9 @@
 // 			window.open(url, "", "width=300, height=200");
 			fileUpdate.fileDelete.value = 1;
 			alert("삭제 되었습니다.");
-			var header = document.querySelector(".test");	//제거하고자 하는 엘리먼트
-			header.parentNode.removeChild(header);
+// 			var header = document.querySelector(".test");	//제거하고자 하는 엘리먼트
+			var header = document.getElementsByClassName("test");	//제거하고자 하는 엘리먼트
+			header[0].remove();
 		}
 	</script>
 </head>

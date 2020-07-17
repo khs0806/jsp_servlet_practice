@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+  <settings>
+  	<setting name="jdbcTypeForNull" value="NULL" />
+  </settings>
   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC"/>
@@ -18,5 +21,7 @@
     <mapper resource="com/java/member/model/mapper/memberMapper.xml"/>
     <mapper resource="com/java/board/model/mapper/boardMapper.xml"/>
     <mapper resource="com/java/fileBoard/model/mapper/fileBoardMapper.xml"/>
+    <mapper resource="com/java/sawon/model/mapper/sawonmapper.xml"/>
+    <mapper resource="com/java/reply/model/mapper/replyMapper.xml"/>
   </mappers>
 </configuration>

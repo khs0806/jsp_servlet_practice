@@ -63,4 +63,12 @@ alter table board add file_name varchar2(200);
 alter table board MODIFY path varchar2(300);
 alter table board add file_size number(10);
 
-insert into board(board_number, writer, subject, content, password, write_date, read_count, group_number, sequence_number, sequence_level, file_name, path, file_size) 
+/* Ajax ´ñ±Û */
+create table linereply(
+    bunho number(8),
+    line_reply varchar2(500),
+    primary key (bunho)
+);
+
+create sequence linereply_bunho_seq;
+select * from linereply;

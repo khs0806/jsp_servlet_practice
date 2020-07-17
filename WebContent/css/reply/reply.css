@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+
+body{ 
+	font-size:12px;
+}
+
+a:link {
+	text-decoration:none;
+	color:blue
+}
+
+a:visited {
+	text-decoration:none;
+	color:red
+}
+
+a:hover {
+	text-decoration:none;
+	color:black
+}
+
+.replyDiv{	
+	width:400px;height:25px; 
+	border:solid 0px red;
+	margin:4px 0px 0px 4px;
+}
+
+.cssBunho {
+	width:50px; height:20px;
+	border:solid 0px blue;
+	display:block;
+	float:left;
+}
+
+
+.cssReply {
+	width:200px; height:20px;
+	border:solid 0px blue;
+	display:block;
+	float:left;
+}
+
+.cssUpDel {
+	width:70px; height:20px;
+	border:solid 0px blue;
+	display:block;
+	float:left;
+}

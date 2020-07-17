@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.java.reply.model.mapper.ReplyMapper">
+	<insert id="reply_writer">
+		insert into linereply values(linereply_bunho_seq.nextval, #{line_reply})
+	</insert>
+
+	<select id="reply_getBunho" resultType="int">
+		select nvl(max(bunho), 0) from linereply
+	</select>
+</mapper>

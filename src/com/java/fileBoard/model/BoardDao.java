@@ -1,11 +1,6 @@
 package com.java.fileBoard.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +8,6 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import com.java.database.ConnectionProvider;
-import com.java.database.JdbcUtil;
 import com.java.myBatis.SqlManager;
 
 public class BoardDao {
@@ -97,6 +90,7 @@ public class BoardDao {
 		
 		return value;
 	}
+	
 //	게시글 목록 가져오기
 	public List<BoardDto> getBoardList(int startRow, int endRow) {
 		List<BoardDto> boardList = new ArrayList<>();
