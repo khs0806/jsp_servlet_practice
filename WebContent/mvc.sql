@@ -72,3 +72,5 @@ create table linereply(
 
 create sequence linereply_bunho_seq;
 select * from linereply;
+
+ALTER TABLE linereply ADD(user_ip varchar2(200));

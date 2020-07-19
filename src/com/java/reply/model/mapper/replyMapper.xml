@@ -5,10 +5,26 @@
   
 <mapper namespace="com.java.reply.model.mapper.ReplyMapper">
 	<insert id="reply_writer">
-		insert into linereply values(linereply_bunho_seq.nextval, #{line_reply})
+		insert into linereply (bunho, line_reply, user_ip) values (linereply_bunho_seq.nextval, #{line_reply}, #{user_ip})
 	</insert>
 
 	<select id="reply_getBunho" resultType="int">
 		select nvl(max(bunho), 0) from linereply
 	</select>
+	
+	<select id="reply_list" resultType="com.java.reply.model.ReplyDto">
+		select * from linereply order by bunho desc
+	</select>
+
+	<delete id="reply_delete" parameterType="int">
+		delete from linereply where bunho=#{bunho}
+	</delete>
+	
+	<select id="reply_select" parameterType="int" resultType="com.java.reply.model.ReplyDto">
+		select * from linereply where bunho=#{bunho}
+	</select>
+	
+	<update id="reply_update" parameterType="java.util.Map">
+		update linereply set line_reply=#{line_reply} where bunho=#{bunho}
+	</update>
 </mapper>
