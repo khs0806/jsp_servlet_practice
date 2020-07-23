@@ -20,7 +20,8 @@ public class ReplyListCommand implements Command {
 		
 		
 		request.setAttribute("replyList", replyList);
-		return "/WEB-INF/views/ajax/reply/list.jsp";
+//		return "/WEB-INF/views/ajax/reply/list.jsp";
+		return "/WEB-INF/views/jquery/reply/list.jsp";
 	}
 
 }

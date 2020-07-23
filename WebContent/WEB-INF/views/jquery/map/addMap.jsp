@@ -7,30 +7,51 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="${root}/xhr/xhr.js"></script>
+<script type="text/javascript" src="${root}/xhr/jquery.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2992107a6cdd4a70cae5c448140c5fd1"></script>
 <script type="text/javascript">
-	var arr = new Array();
-	function toServer(){
-		var addr = document.getElementById("addr").value;
-		arr.push("addr:"+addr);
-// 		alert(arr.join("\n"));
-		
-		var url = "https://dapi.kakao.com/v2/local/search/address.json";
+	
+$(function(){
+	$("#btn").click(function(){
+		var addr = $("#addr").val();
 		var params = "query=" + addr;
+		var url = "https://dapi.kakao.com/v2/local/search/address.json";
 		
-		sendRequest("GET", url, params, fromServer);
-	}
-	function fromServer(){
+		$.ajax({
+			url:url + "?" + params,
+			type:"get",
+			dataType:"json",
+			headers:{"Authorization":"KakaoAK 8c08273a21863da84621e6bb6aca71ee"},
+			success:processJson
+		});
 		
-		if (xhr.readyState==4 && xhr.status==200){
-// 			arr.push("상태,응답코드:" + xhr.readyState + "," + xhr.status);
-			console.log("응답텍스트" + xhr.responseText);
-			processJson();
-		}
-	}
-	function processJson(){
-		var obj = JSON.parse(xhr.responseText);
+	});
+});
+	
+	
+	
+	var arr = new Array();
+	
+// 	function toServer(){
+// 		var addr = document.getElementById("addr").value;
+// 		arr.push("addr:"+addr);
+// // 		alert(arr.join("\n"));
+		
+// 		var url = "https://dapi.kakao.com/v2/local/search/address.json";
+// 		var params = "query=" + addr;
+		
+// 		sendRequest("GET", url, params, fromServer);
+// 	}
+// 	function fromServer(){
+		
+// 		if (xhr.readyState==4 && xhr.status==200){
+// // 			arr.push("상태,응답코드:" + xhr.readyState + "," + xhr.status);
+// 			console.log("응답텍스트" + xhr.responseText);
+// 			processJson();
+// 		}
+// 	}
+	function processJson(obj){
+// 		var obj = JSON.parse(xhr.responseText);
 		var y = obj.documents[0].y;
 		var x = obj.documents[0].x;
 		arr.push("x,y:" + x + "," + y)
@@ -63,9 +84,9 @@
 </script>
 </head>
 <body>
-	<h3>주소</h3>
+	<h3>주소 Jquery</h3>
 	<input id="addr" type="text"/>
-	<input type="button" value="주소검색" onclick="toServer()"/>
+	<input type="button" value="주소검색" id="btn"/>
 	
 	<div id="map" style="width:500px;height:400px;"></div>
 </body>

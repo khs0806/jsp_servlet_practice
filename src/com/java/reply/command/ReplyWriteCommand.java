@@ -1,9 +1,13 @@
 package com.java.reply.command;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.java.command.Command;
 import com.java.reply.model.ReplyDao;
@@ -28,7 +32,7 @@ public class ReplyWriteCommand implements Command {
 			//DB에서 가장 큰 번호 가져오기
 			int bunho=ReplyDao.getInstance().getBunho();
 			logger.info(logMsg+writeReply+", "+bunho);
-			
+			JSONArray jsonArray = new JSONArray();
 			//jsp와 java는 jstl을 통해 request로 데이터 주고받을수 있었다.
 			//java와 js는 그런게 없으므로 텍스트로 주고받야아한다.
 			//행이 하나에 열이 여러개를 보내야하면 -> JSON
@@ -36,11 +40,19 @@ public class ReplyWriteCommand implements Command {
 			//우리는 열이 두개뿐이라 두개를 합쳐서 responseText하나로 보내고 js에서 split()을 이용하여 배열에 저장할것
 			//보내는 방식은 response.setContetType("text");
 			
-			String str=bunho+","+writeReply+","+user_ip;	//JSON - SPRING
+			String str=bunho+","+writeReply;	//JSON - SPRING
+			
+			HashMap<String, Object> map = new HashMap<>();
+	  		map.put("bunho",bunho);
+	  		map.put("writeReply",writeReply);
+	  		
+	  		JSONObject obj = new JSONObject(map);
+			
 			response.setContentType("application/text;charset=utf-8");	//json이 넘어가면 application/json, 필터 안해주기 때문에 charset해줘야함
 			PrintWriter pw=response.getWriter();
-			
-			pw.print(str);//소켓스트림 통해서 java에서 js단으로 넘어가는것
+			logger.info(logMsg + str);
+			jsonArray.add(obj);
+			pw.print(jsonArray);//소켓스트림 통해서 java에서 js단으로 넘어가는것
 		}
 		/*
 		 * System.out.println("요청 프로토콜: "+request.getProtocol());

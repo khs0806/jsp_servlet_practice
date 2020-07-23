@@ -10,7 +10,8 @@ public class AddrMapCommand implements Command {
 	@Override
 	public String proRequest(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		
-		return "/WEB-INF/views/ajax/map/addMap.jsp";
+//		return "/WEB-INF/views/ajax/map/addMap.jsp";
+		return "/WEB-INF/views/jquery/map/addMap.jsp";
 	}
 
 }

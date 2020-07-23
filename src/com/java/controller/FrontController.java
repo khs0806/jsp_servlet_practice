@@ -84,7 +84,7 @@ public class FrontController extends HttpServlet {
 		// viewPage가 반환되어 null이 아닐 때
 		if(viewPage != null) {
 						// 우편번호페이지와 아이디중복체크 페이지는 template를 거치지 않고 바로 포웨이드한다.
-			if (viewPage.equals("/WEB-INF/views/member/zipcode.jsp") || viewPage.equals("/WEB-INF/views/member/idCheck.jsp")) {
+			if (viewPage.equals("/WEB-INF/views/member/zipcode.jsp") || viewPage.equals("/WEB-INF/views/member/idCheck.jsp") || viewPage.equals("/WEB-INF/views/jquery/proxy/pXML.jsp")) {
 				rd = request.getRequestDispatcher(viewPage);
 				
 			} else {	// 그 외의 다른 페이지들은 template를 통해 반환하여 포웨이드 해준다
