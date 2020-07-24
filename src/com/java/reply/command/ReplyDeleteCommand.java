@@ -20,7 +20,7 @@ public class ReplyDeleteCommand implements Command {
 		logger.info(logMsg+ check);
 		
 		if(check>0) {
-			response.setContentType("application/txt;charset=utf-8");
+			response.setContentType("application/text;charset=utf-8");
 			PrintWriter out=response.getWriter();
 			out.print(bunho);
 		}

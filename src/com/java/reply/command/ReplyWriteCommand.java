@@ -17,12 +17,12 @@ public class ReplyWriteCommand implements Command {
 
 	@Override
 	public String proRequest(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		String writeReply=request.getParameter("writeReply");
+		String reply=request.getParameter("writeReply");
 		String user_ip=request.getRemoteAddr();
-		logger.info(logMsg+user_ip+writeReply);
+		logger.info(logMsg+user_ip+reply);
 		
 		ReplyDto replyDto=new ReplyDto();
-		replyDto.setLine_reply(writeReply);
+		replyDto.setLine_reply(reply);
 		replyDto.setUser_ip(user_ip);
 		
 		int check=ReplyDao.getInstance().insert(replyDto);
@@ -31,8 +31,7 @@ public class ReplyWriteCommand implements Command {
 		if(check>0) {
 			//DB에서 가장 큰 번호 가져오기
 			int bunho=ReplyDao.getInstance().getBunho();
-			logger.info(logMsg+writeReply+", "+bunho);
-			JSONArray jsonArray = new JSONArray();
+			logger.info(logMsg+reply+", "+bunho);
 			//jsp와 java는 jstl을 통해 request로 데이터 주고받을수 있었다.
 			//java와 js는 그런게 없으므로 텍스트로 주고받야아한다.
 			//행이 하나에 열이 여러개를 보내야하면 -> JSON
@@ -40,19 +39,19 @@ public class ReplyWriteCommand implements Command {
 			//우리는 열이 두개뿐이라 두개를 합쳐서 responseText하나로 보내고 js에서 split()을 이용하여 배열에 저장할것
 			//보내는 방식은 response.setContetType("text");
 			
-			String str=bunho+","+writeReply;	//JSON - SPRING
+			String str=bunho+","+reply;	//JSON - SPRING
 			
 			HashMap<String, Object> map = new HashMap<>();
 	  		map.put("bunho",bunho);
-	  		map.put("writeReply",writeReply);
+	  		map.put("reply",reply);
 	  		
 	  		JSONObject obj = new JSONObject(map);
 			
 			response.setContentType("application/text;charset=utf-8");	//json이 넘어가면 application/json, 필터 안해주기 때문에 charset해줘야함
 			PrintWriter pw=response.getWriter();
 			logger.info(logMsg + str);
-			jsonArray.add(obj);
-			pw.print(jsonArray);//소켓스트림 통해서 java에서 js단으로 넘어가는것
+			
+			pw.print(obj);//소켓스트림 통해서 java에서 js단으로 넘어가는것
 		}
 		/*
 		 * System.out.println("요청 프로토콜: "+request.getProtocol());

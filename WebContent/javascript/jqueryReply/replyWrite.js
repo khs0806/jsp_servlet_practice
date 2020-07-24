@@ -20,67 +20,20 @@ function writeToServer(requestRoot){
 }
 
 function writeProcess(data){
-	alert(data);
-}
-
-function writeFromServer(data){
-	if(xhr.readyState==4 && xhr.status==200){
-		//arr.push("마지막출력 : "+xhr.responseText);
-		
-		var result=xhr.responseText.split(",");
-		
-		var bunho=result[0].trim();	//혹시 모를 양옆 공백제거
-		var reply=result[1].trim();
-		var userIp=result[2];
-		document.getElementById("writeReply").value="";
-		
-		var listAllDiv=document.getElementById("listAllDiv");
-		var div=document.createElement("div");
-		
-		div.className="replyDiv";
-		div.id=bunho;
-		
-		
-		var spanBunho=document.createElement("span");
-		spanBunho.innerText=bunho;
-		spanBunho.className="cssBunho";
-		
-		var spanReply=document.createElement("span");
-		spanReply.innerText=reply;
-		spanReply.className="cssReply";
-		
-		var spanIp=document.createElement("span");
-		spanIp.innerText=userIp;
-		spanIp.className="cssIp";
-		
-		var spanUpDel=document.createElement("span");
-		spanUpDel.className="cssUpDel";
-		
-		var aDelete=document.createElement("a");
-		//aDelete.href="javascript:deleteToServer('"+bunho+"', '"+root+"')";
-		//aDelete.style="color:blue;cursor:pointer;";
-		aDelete.href='#';
-		aDelete.innerHTML="삭제 &nbsp;";
-		aDelete.onclick=function(){
-			deleteToServer(bunho,root);
-		};
-		
-		
-		var aUpdate=document.createElement("a");
-		aUpdate.href='#';
-		aUpdate.innerHTML="수정";
-		aUpdate.onclick=function(){
-			selectToServer(bunho,root);
-		};
-		spanUpDel.appendChild(aDelete);
-		spanUpDel.appendChild(aUpdate);
-		
-		div.appendChild(spanBunho);
-		div.appendChild(spanIp);
-		div.appendChild(spanReply);
-		div.appendChild(spanUpDel);
-		listAllDiv.appendChild(div);
-		listAllDiv.insertBefore(div, listAllDiv.firstChild);
-		//alert(arr.join("\n"));
-	}
+	var obj = $.parseJSON(data);
+	var bunho = obj.bunho;
+	var reply = obj.reply;
+	
+	$("#writeReply").val("");
+	var newReplyText = "<div class='replyDiv' id='" + bunho + "'>";
+	newReplyText += "<span class='cssBunho'>" + bunho + "</span>";
+	newReplyText += "<span class='cssReply'>" + reply + "</span>";
+	newReplyText += "<span class='cssUpDel'>";
+	newReplyText += "<a href='javascript:deleteToServer("+bunho+", \""+root+"\")'>삭제</a>&nbsp;";
+	newReplyText += "<a href='javascript:selectToServer("+bunho+", \""+root+"\")'>수정</a>";
+	
+	newReplyText += "</span>";
+	newReplyText += "</div>";
+	
+	$("#listAllDiv").prepend(newReplyText);
 }

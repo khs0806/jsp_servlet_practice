@@ -12,7 +12,7 @@ function createXHR(){
 }
 
 var xhr=null;
-function sendRequest(method, url, param, callback){
+function sendRequest(method, url, param, callback) {
 	var httpMethod = method.toUpperCase();
 	var httpUrl = url;
 	var httpParams = (param==null || param=="") ? null:param;

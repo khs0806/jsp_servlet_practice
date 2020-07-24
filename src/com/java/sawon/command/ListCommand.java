@@ -9,7 +9,7 @@ public class ListCommand implements Command {
 
 	@Override
 	public String proRequest(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		
+		System.out.println();
 //		return "/WEB-INF/views/ajax/sawon/list.jsp";
 		return "/WEB-INF/views/jquery/sawon/list.jsp";
 	}

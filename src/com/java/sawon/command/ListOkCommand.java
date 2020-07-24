@@ -21,12 +21,9 @@ public class ListOkCommand implements Command {
 
 		String departmentName = request.getParameter("departmentName");
 		logger.info(logMsg + departmentName);
-	
 			
 	  	List<SawonDto> sawonList = SawonDao.getInstance().select(departmentName);
 	  	logger.info(logMsg + sawonList.size());
-	  	
-	  	
 	  	
 	  	// JSON - DB에서 가져온 사원데이터를 JSON 형식의 데이터로 만들어줘서 반환해야한다.
 	  	JSONArray jsonArray = new JSONArray();
@@ -50,6 +47,7 @@ public class ListOkCommand implements Command {
 		  		JSONObject obj = new JSONObject(map);
 		  		jsonArray.add(obj);
 	  		}
+	  		
 	  		logger.info(logMsg + jsonArray);
 	  		response.setContentType("application/text; charset=utf-8");
 	  		PrintWriter out = response.getWriter();

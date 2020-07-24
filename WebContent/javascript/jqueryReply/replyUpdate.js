@@ -6,68 +6,62 @@ var root=null;
 function selectToServer(bunho,requestRoot){
 	root=requestRoot;
 
-	var url=root+"/reply/replySelect.do";
 	var param="bunho="+bunho;
+	var url=root+"/reply/replySelect.do?" + param;
+	var urll=root+"/reply/replySelect.do";
+	
+	$.ajax({
+		url:url,
+		type:"get",
+		dataType:"text",
+		success:selectFromServer
+	});
 
 	//arr.push(url+","+param);
-
-	sendRequest("GET", url, param, selectFromServer);
 }
 
-function selectFromServer(){
-	if(xhr.readyState==4 && xhr.status==200){
-		var result=xhr.responseText.split(",");
-		var bunho=result[0].trim();
-		var reply=result[1].trim();
-
-		//arr.push("수정선택"+bunho+", "+reply);
-
-
-
-		//새로운 Input 태그 생성
-		var div=document.createElement("div");
-		div.id="up"+bunho;
-		var inputText=document.createElement("input");
-		var inputBtn=document.createElement("input");
-		inputText.setAttribute("type", "text");
-		inputText.value=reply;
-		inputBtn.setAttribute("type", "button");
-		inputBtn.value="수정";
-		inputBtn.onclick=function(){
-			updateToServer(bunho, inputText.value);
-		}
-
-		div.appendChild(inputText);
-		div.appendChild(inputBtn);
-
-		var bunhoDiv=document.getElementById(bunho);
-		bunhoDiv.appendChild(div);
-
+function selectFromServer(data){
+	alert(data);
+	var result = data.split(",");
+	var bunho = result[0].trim();
+	var reply = result[1].trim();
+	
+	var div = document.createElement("div");
+	$(div).attr("id","up" + bunho);
+	
+	var inputText = document.createElement("input");
+	$(inputText).attr("type","text").val(reply);
+	
+	var inputBtn = document.createElement("input");
+	$(inputBtn).attr("type","button").val("수정");
+	inputBtn.onclick=function(){
+		updateToServer(bunho, inputText.value);
 	}
+	
+	$(div).append(inputText, inputBtn);
+	$("#" + bunho).append(div);
 
 }
 
 function updateToServer(bunho, value){
-	var url=root+"/reply/replyUpdate.do";
 	var param="bunho="+bunho+"&value="+value;
+	var url=root+"/reply/replyUpdate.do?" + param;
+	
+	$.ajax({
+		url:url,
+		type:"get",
+		dataType:"text",
+		success:updateFromServer
+	})
 
-	sendRequest("POST", url, param, updateFromServer);
 }
-function updateFromServer(){
-	if(xhr.readyState==4 && xhr.status==200){
-		var result=xhr.responseText.split(",");
-		var bunho=result[0].trim();
-		var reply=result[1].trim();
-
-		var bunhoDiv=document.getElementById(bunho);
-
-		var span=bunhoDiv.getElementsByTagName("span");
-
-		span[2].innerText=reply;
-
-		var upDiv=document.getElementById("up"+bunho);
-		bunhoDiv.removeChild(upDiv);
-
-	}
+function updateFromServer(data){
+	var obj = $.parseJSON(data);
+	var bunho = obj.bunho;
+	var reply = obj.reply;
+	alert(bunho + " " + reply);
+	$("#" + bunho).children("span:eq(1)").text(reply);
+	$("#up" + bunho).remove();
+	
 	//alert(arr.join("\n"));
 } 
